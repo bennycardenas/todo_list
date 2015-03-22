@@ -1,7 +1,17 @@
 <?php
 
-// Create array to hold list of todo items
+// Most of this code should be very familiar by now, but we have introduced a few new items.
+// trim() removed whitespace and special characters from strings. See the PHP man page for trim().
+// We used a do/while instead of another control structure. This allowed us to enter our loop, and pause at the user input area until the user decides to (Q)uit.
+// We used unset() to remove array elements. See the PHP man page for unset().
 
+// Exercises
+// Create a new directory in your vagrant-lamp directory named todo_list with a file named todo.php containing the code above. Use git init to initialize a new local repository in that directory and commit your code. Create a new remote repository on GitHub called CLI_Todo_List and add the remote to your local repository so you can push your code.
+// After each exercise item, commit and push changes to your GitHub repository.
+// Update the code to allow upper and lowercase inputs from user for all menu items. Test adding, removing, and quitting.
+// Update the program to start numbering the list with 1 instead of 0. Make sure remove still works as expected.
+
+// Create array to hold list of todo items
 $items = array('Justin', 'Jamie', 'Keyasha', 'Benny', 15, 2015, 95, 97);
 
 function sortItems($items){
@@ -20,7 +30,6 @@ function sortItems($items){
         }
         return $items;
     }
-    
 
 // The loop!
 do {
@@ -39,10 +48,21 @@ do {
 
     // Check for actionable input
     if ($input == 'N') {
-        // Ask for entry
-        echo 'Enter item: ';
+    echo 'Enter item: ';
+        
         // Add entry to list array
-        $items[] = trim(fgets(STDIN));
+        $newItem = trim(fgets(STDIN));
+        echo "Enter 'B' to add it to the beginning or enter 'E' for end: ";
+        
+        $listOrder = trim(fgets(STDIN));
+
+        if($listOrder == 'B'){
+            array_unshift($items, $newItem);
+        } elseif ($listOrder == 'E') {
+            array_push($items, $newItem);
+            //THIS LINE SAME AS ABOVE: $items[] = $newItem
+        }
+       
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
@@ -52,6 +72,10 @@ do {
         unset($items[$key]);
     } elseif ($input == 'S') {
         $items = sortItems($items);
+    } elseif($input == 'F') {
+        array_shift($items);
+    } elseif ($input == 'L') {
+        array_pop($items);
     }
 
 // Exit when input is (Q)uit
@@ -62,14 +86,3 @@ echo "Goodbye!\n";
 
 // Exit with 0 errors
 exit(0);
-
-// Most of this code should be very familiar by now, but we have introduced a few new items.
-// trim() removed whitespace and special characters from strings. See the PHP man page for trim().
-// We used a do/while instead of another control structure. This allowed us to enter our loop, and pause at the user input area until the user decides to (Q)uit.
-// We used unset() to remove array elements. See the PHP man page for unset().
-
-// Exercises
-// Create a new directory in your vagrant-lamp directory named todo_list with a file named todo.php containing the code above. Use git init to initialize a new local repository in that directory and commit your code. Create a new remote repository on GitHub called CLI_Todo_List and add the remote to your local repository so you can push your code.
-// After each exercise item, commit and push changes to your GitHub repository.
-// Update the code to allow upper and lowercase inputs from user for all menu items. Test adding, removing, and quitting.
-// Update the program to start numbering the list with 1 instead of 0. Make sure remove still works as expected.
